@@ -91,8 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            app:backgroundTint="@color/gmts_blue"
-            android:src="@drawable/ic_create_black_24dp"
+            app:backgroundTint="@android:color/holo_purple"
+            android:src="@drawable/plus_icon"
             android:contentDescription="Add your own Recipe" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
