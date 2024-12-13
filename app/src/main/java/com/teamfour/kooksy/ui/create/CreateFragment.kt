@@ -78,10 +78,7 @@ class CreateFragment : Fragment() {
         if (recipe != null) {
             prePopulateFields(recipe)
         }
-        else{
-            resetFormFields()
-        }
-
+        
         // Initialize ViewModel
         viewModel = ViewModelProvider(this).get(CreateViewModel::class.java)
         Log.d(TAG, "ViewModel initialized successfully")

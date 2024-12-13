@@ -47,7 +47,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cookingTimeCardView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_margin="8dp"
             android:layout_weight="1"
             app:cardBackgroundColor="#C5E6F3"
@@ -56,7 +56,7 @@
             <TextView
                 android:id="@+id/cookingTime"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 android:drawableTop="@drawable/clock"
                 android:drawablePadding="8dp"
@@ -70,7 +70,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/recipeDifficultyLevelCardView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_margin="8dp"
             android:layout_weight="1"
             app:cardBackgroundColor="#F2F0A0"
@@ -91,7 +91,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/recipeCaloriesCardView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_margin="8dp"
             android:layout_weight="1"
             app:cardBackgroundColor="#F6E0CD"
@@ -100,7 +100,7 @@
             <TextView
                 android:id="@+id/recipeCalories"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 android:drawableTop="@drawable/fire"
                 android:drawablePadding="8dp"
