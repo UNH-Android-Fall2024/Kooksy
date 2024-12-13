@@ -13,8 +13,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="12dp">
+        android:padding="16dp">
 
+        <!-- Item Image -->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/item_image"
             android:layout_width="164dp"
@@ -26,6 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Item Name -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
@@ -37,6 +39,7 @@
             app:layout_constraintTop_toBottomOf="@id/item_image"
             tools:text="Gopinatyh" />
 
+        <!-- Time Text View -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/time_tv"
             android:layout_width="wrap_content"
@@ -47,6 +50,7 @@
             app:layout_constraintTop_toBottomOf="@id/item_name"
             tools:text="Gopinatyh" />
 
+        <!-- Favourite Icon -->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/favourite_iv"
             android:layout_width="25dp"

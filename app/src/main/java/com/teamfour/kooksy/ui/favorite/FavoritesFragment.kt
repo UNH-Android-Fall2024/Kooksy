@@ -35,11 +35,13 @@ class FavoritesFragment : Fragment() {
 
         Log.d(TAG, "FavoritesFragment: View created.")
 
+        // Set up observers for LiveData updates and show progress bar
         initObservers()
         (activity as MainActivity).showProgressBar()
         val isOffline = requireContext().getSharedPreferences("KooksyPrefs", Context.MODE_PRIVATE)
             .getBoolean("offlineMode", false)
 
+        // Check if offline mode is enabled
         if (isOffline) {
             Log.d(TAG, "Offline mode enabled. Loading offline favorites.")
         } else {
@@ -48,17 +50,21 @@ class FavoritesFragment : Fragment() {
         }
     }
 
+    //Initializes LiveData observers for menu items.
     private fun initObservers() {
         favoritesViewModel.menuItems.observe(viewLifecycleOwner) { list ->
             if (list.isNullOrEmpty()) {
+                // Show empty state if no favorites are found
                 Log.d(TAG, "No favorites found.")
                 binding.emptyState.visibility = View.VISIBLE
                 binding.favouritesRv.visibility = View.GONE
             } else {
+                // Display favorites in RecyclerView if items are available
                 Log.d(TAG, "Favorites loaded: ${list.size} items.")
                 binding.emptyState.visibility = View.GONE
                 binding.favouritesRv.visibility = View.VISIBLE
                 adapter = FavouriteAdapter(list) { item ->
+                    // Handle item click and navigate to recipe details
                     Log.d(TAG, "Navigating to recipe details for: ${item.recipe_name}")
                     val action =
                         FavoritesFragmentDirections.actionNavigationFavoriteToRecipeFragment(item)

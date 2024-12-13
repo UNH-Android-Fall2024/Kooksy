@@ -6,17 +6,6 @@
     android:background="@android:color/white"
     android:padding="16dp">
 
-    <!-- Settings Icon -->
-    <ImageView
-        android:id="@+id/settings_icon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@string/settings"
-        android:src="@drawable/ic_settings"
-        app:layout_constraintBottom_toBottomOf="@id/profile_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/profile_image" />
-
     <!-- Profile Image -->
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/profile_image"
@@ -68,6 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_image">
 
+        <!-- Offline Mode Switch -->
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/offline_mode_toggle"
             android:layout_width="match_parent"
@@ -116,7 +106,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_recipes_button" />
 
-    <!-- Recipe Album Button -->
+    <!-- Logout Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logout_button"
         android:layout_width="0dp"

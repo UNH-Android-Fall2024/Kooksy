@@ -5,6 +5,7 @@
     android:id="@+id/splash_screen_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     android:background="#E48364">
 
     <!-- Kooksy Image -->
@@ -22,7 +23,7 @@
     <!-- Heading -->
     <TextView
         android:id="@+id/heading"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/welcome_to_kooksy"
@@ -36,9 +37,9 @@
     <!-- Subheading -->
     <TextView
         android:id="@+id/subHeading"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="18dp"
         android:text="@string/unlock_the_chef_in_you_with_kooksy"
         android:textSize="25sp"
         android:fontFamily="@font/alegreya_medium"

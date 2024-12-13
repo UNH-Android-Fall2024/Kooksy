@@ -5,22 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.teamfour.kooksy.R
 import com.teamfour.kooksy.databinding.FragmentFilterOverlayBinding
 
 class FilterOverlayFragment(
-    private val applyFilters: (String, Boolean, Int) -> Unit,
-    private val clearFilters: () -> Unit // Add this function for clearing filters
+    private val applyFilters: (String, Boolean, Int) -> Unit, //To apply filters with the selected criteria
+    private val clearFilters: () -> Unit // To clear filters
 ) : DialogFragment() {
 
     private var _binding: FragmentFilterOverlayBinding? = null
     private val binding get() = _binding!!
 
+    // Variables to hold selected filter values
     private var selectedDishType = "Both"
     private var selectedDifficulty = "All"
     private var selectedRating = 1
@@ -32,13 +30,11 @@ class FilterOverlayFragment(
         _binding = FragmentFilterOverlayBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        // Apply the slide-in animation
+        // Slide-in animation to the filter overlay
         val slideInAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_right)
         view.startAnimation(slideInAnimation)
 
-
-        // Set up the dish type filter
-        binding.dishTypeRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.dishTypeRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             selectedDishType = when (checkedId) {
                 R.id.radio_without_meat -> "Without Meat"
                 R.id.radio_with_meat -> "Meat"
@@ -46,8 +42,7 @@ class FilterOverlayFragment(
             }
         }
 
-        // Set up the difficulty level filter
-        binding.difficultyRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.difficultyRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             selectedDifficulty = when (checkedId) {
                 R.id.radio_easy -> "Easy"
                 R.id.radio_medium -> "Medium"
@@ -56,11 +51,11 @@ class FilterOverlayFragment(
             }
         }
 
-        // Set up the rating slider
-        binding.ratingSeekBar.max = 4 // Adjust for a range of 1 to 5
+        // Setup for the rating slider (1 to 5 stars)
+        binding.ratingSeekBar.max = 4
         binding.ratingSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                selectedRating = progress + 1 // Adjust to make the range 1 to 5
+                selectedRating = progress + 1
                 binding.ratingValue.text = selectedRating.toString()
             }
 
@@ -68,19 +63,18 @@ class FilterOverlayFragment(
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        // Apply Filter Button Listener
+        // Apply Filter button
         binding.applyFilterButton.setOnClickListener {
             applyFilters(selectedDifficulty, selectedDishType == "Without Meat", selectedRating)
             dismiss()
         }
 
-        // Clear Filter Button Listener
+        // Clear Filter button
         binding.clearFilterButton.setOnClickListener {
-            clearFilters() // Call the function to clear filters
+            clearFilters()
             dismiss()
         }
 
-        // Close the overlay when clicking the close icon
         binding.closeFilter.setOnClickListener {
             dismiss()
         }

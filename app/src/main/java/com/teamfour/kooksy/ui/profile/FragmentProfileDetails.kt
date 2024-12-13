@@ -11,11 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.teamfour.kooksy.databinding.FragmentProfileDetailsBinding
 
-
+// Fragment to handle user profile details, including updating username and password
 class FragmentProfileDetails : Fragment() {
 
     lateinit var binding: FragmentProfileDetailsBinding
-    private val regex: Regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#\$%^&+=!]).{8,}$".toRegex()
+    private val regex: Regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#\$%^&+=!]).{8,}$".toRegex() //// Regex to validate strong passwords
     val viewModel: ProfileViewModel by viewModels()
 
 
@@ -29,11 +29,13 @@ class FragmentProfileDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Populate fields with existing user details, if available
         UserDetails.user?.let {
             binding.emailEditText.setText(UserDetails.user?.email)
             binding.nameEditText.setText(UserDetails.user?.user_name)
         }
 
+        // Variables to store input values
         var password = ""
         var confirmPassword =""
         var username  = ""
