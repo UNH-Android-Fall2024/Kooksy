@@ -92,19 +92,6 @@ class CreateFragment : Fragment() {
             Log.d(TAG, "Updated imageUrl observed: $imageUrl")
         })
 
-        binding.addImageButton.setOnClickListener {
-            showImageSourceDialog()
-            Log.d(TAG, "Gallery opened for image selection")
-        }
-
-        // Handle Submit Recipe Button Click
-        if(binding.submitRecipeButton.text.equals("Submit")){
-            binding.submitRecipeButton.setOnClickListener {
-                Log.d(TAG, "Submit button clicked")
-                submitRecipe() // Call the local submitRecipe() function here
-            }
-        }
-
         // Initialize ingredientCount and stepCount before setting click listeners
         ingredientCount = 1
         stepCount = 1
@@ -119,8 +106,20 @@ class CreateFragment : Fragment() {
             addNewStep() // Dynamically add new steps
         }
 
-        Log.d(TAG, "View created") // Log to indicate the view is created
+        binding.addImageButton.setOnClickListener {
+            showImageSourceDialog()
+            Log.d(TAG, "Gallery opened for image selection")
+        }
 
+        // Handle Submit Recipe Button Click
+        if(binding.submitRecipeButton.text.equals("Submit")){
+            binding.submitRecipeButton.setOnClickListener {
+                Log.d(TAG, "Submit button clicked")
+                submitRecipe() // Call the local submitRecipe() function here
+            }
+        }
+
+        Log.d(TAG, "View created") // Log to indicate the view is created
         return binding.root
     }
 
@@ -157,18 +156,21 @@ class CreateFragment : Fragment() {
 
         recipe.recipe_instructions?.let{
             binding.stepsContainer.removeAllViews()
-            for(step in it){
+            val firstStep = it[0]
+            // Hardcoded first step
+            binding.step1Input.setText(firstStep)
+            for(step in it.drop(1)){
                 addNewStep(step)
                 Log.d(TAG, "Added step: $step")
             }
         }
 
         binding.submitRecipeButton.text = "Update"
+        //Handle Update button click
         binding.submitRecipeButton.setOnClickListener {
-            Log.d(TAG, "Submit button clicked")
-            updateRecipe(recipe.documentId) // Call the local submitRecipe() function here
+            Log.d(TAG, "Update button clicked")
+            updateRecipe(recipe.documentId) // Call the local updateRecipe() function here
         }
-
     }
 
     private val CAMERA_PERMISSION_CODE = 102
@@ -343,72 +345,57 @@ class CreateFragment : Fragment() {
             downloadUrl.toString()
         }
     }
-    
-    // Function to submit recipe to Firestore
-    private fun submitRecipe() {
-        val recipeName = binding.txtRecipeName.text.toString()
-        val recipeCalories = binding.caloriesInput.text.toString().toIntOrNull() ?: 0
-        val cookTime = binding.cookTimeInput.text.toString().toIntOrNull() ?: 0
-        val difficulty = binding.difficultySpinner.selectedItem.toString()
-        val ingredients = getIngredientsList()
-        val steps = getStepsList()
 
-        if (recipeName.isEmpty() || ingredients.isEmpty() || steps.isEmpty()) {
-            Toast.makeText(requireContext(), "Please fill all required fields!", Toast.LENGTH_SHORT).show()
-            Log.d(TAG, "Form validation failed: Empty fields detected")
-            return
+// Function to handle both submitting and updating recipes
+private fun handleRecipeSubmission(isUpdate: Boolean = false, recipeId: String? = null) {
+    val recipeName = binding.txtRecipeName.text.toString()
+    val recipeCalories = binding.caloriesInput.text.toString().toIntOrNull() ?: 0
+    val cookTime = binding.cookTimeInput.text.toString().toIntOrNull() ?: 0
+    val difficulty = binding.difficultySpinner.selectedItem.toString()
+    val ingredients = getIngredientsList()
+    val steps = getStepsList()
+
+    if (recipeName.isEmpty() || ingredients.isEmpty() || steps.isEmpty()) {
+        Toast.makeText(requireContext(), "Please fill all required fields!", Toast.LENGTH_SHORT).show()
+        Log.d(TAG, "Form validation failed: Empty fields detected")
+        return
+    }
+
+    val onSuccess : () -> Unit = {
+        Log.d(TAG, "Recipe ${if (isUpdate) "Updated" else "Submitted"} successfully!")
+        showSuccessAnimation()
+
+        lifecycleScope.launch {
+            Log.d(TAG, "Starting delay for animation")
+            delay(3000) // Wait for animation to complete
+            Log.d(TAG, "Delay finished. Resetting form fields.")
+            resetFormFields()
+            hideSuccessAnimation()
         }
-
-        viewModel.submitRecipe(
-            recipeName, recipeCalories, cookTime, difficulty, ingredients, steps, imageUrl,
-            onSuccess = {
-                Log.d(TAG, "Recipe submitted successfully!")
-                showSuccessAnimation()
-
-                lifecycleScope.launch {
-                    Log.d(TAG, "Starting delay for animation")
-                    delay(3000) // Wait for animation to complete
-                    Log.d(TAG, "Delay finished. Resetting form fields.")
-                    resetFormFields()
-                    hideSuccessAnimation()
-                }
-            },
-            onFailure = { e ->
-                Log.e(TAG, "Failed to submit recipe: ${e.message}", e)
-                Toast.makeText(requireContext(), "Failed to submit recipe: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-        )
     }
 
-    private fun updateRecipe(recipeId: String){
-        val recipeName = binding.txtRecipeName.text.toString()
-        val recipeCalories = binding.caloriesInput.text.toString().toIntOrNull() ?: 0
-        val cookTime = binding.cookTimeInput.text.toString().toIntOrNull() ?: 0
-        val difficulty = binding.difficultySpinner.selectedItem.toString()
-        val ingredients = getIngredientsList()
-        val steps = getStepsList()
-//        val recipeImage: Drawable? = binding.imageView.drawable
-
-        viewModel.updateRecipe(
-            recipeId ,recipeName, recipeCalories, cookTime, difficulty, ingredients, steps,
-            onSuccess = {
-                Log.d(TAG, "Recipe updated successfully!")
-                showSuccessAnimation()
-
-                lifecycleScope.launch {
-                    Log.d(TAG, "Starting delay for animation")
-                    delay(3000) // Wait for animation to complete
-                    Log.d(TAG, "Delay finished. Resetting form fields.")
-                    resetFormFields()
-                    hideSuccessAnimation()
-                }
-            },
-            onFailure = { e ->
-                Log.e(TAG, "Failed to update recipe: ${e.message}", e)
-                Toast.makeText(requireContext(), "Failed to update recipe: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-        )
+    val onFailure: (Exception) -> Unit = { e ->
+        Log.e(TAG, "Failed to ${if (isUpdate) "Update" else "Submit"} recipe: ${e.message}", e)
+        Toast.makeText(requireContext(), "Failed to ${if (isUpdate) "update" else "submit"} recipe: ${e.message}", Toast.LENGTH_SHORT).show()
     }
+
+    if (isUpdate && recipeId != null) {
+        viewModel.updateRecipe(recipeId, recipeName, recipeCalories, cookTime, difficulty, ingredients, steps, onSuccess, onFailure)
+    } else {
+        viewModel.submitRecipe(recipeName, recipeCalories, cookTime, difficulty, ingredients, steps, imageUrl, onSuccess, onFailure)
+    }
+}
+
+    // Submit recipe function
+    private fun submitRecipe() {
+        handleRecipeSubmission()
+    }
+
+    // Update recipe function
+    private fun updateRecipe(recipeId: String) {
+        handleRecipeSubmission(isUpdate = true, recipeId = recipeId)
+    }
+
 
     private fun showSuccessAnimation() {
         binding.lottieAnimationView.apply {
@@ -489,7 +476,7 @@ class CreateFragment : Fragment() {
             layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+            ).apply { setMargins(15,15 ,15,15) }
             hint = "Ingredient $currentIngredientNumber"
             textSize = 16f
             setPadding(12, 12, 12, 12)
@@ -497,7 +484,7 @@ class CreateFragment : Fragment() {
 
             // If ingredientData is provided, prepopulate the ingredient name
             ingredientData?.let {
-                setText(it["ingredient_name"]) // Assuming the key is "ingredient"
+                setText(it["ingredient_name"]) // Assuming the key is "ingredient_name"
             }
         }
 
@@ -506,7 +493,7 @@ class CreateFragment : Fragment() {
             layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+            ).apply { setMargins(15,15 ,15,15) }
             hint = "Quantity $currentIngredientNumber"
             textSize = 16f
             setPadding(12, 12, 12, 12)
@@ -514,7 +501,7 @@ class CreateFragment : Fragment() {
 
             // Prepopulate ingredient quantity
             ingredientData?.let {
-                setText(it["ingredient_quantity"]) // Assuming the key is "quantity"
+                setText(it["ingredient_quantity"]) // Assuming the key is "ingredient_quantity"
             }
         }
 
@@ -575,7 +562,7 @@ class CreateFragment : Fragment() {
             layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+            ).apply { setMargins(18,16,18,0) }
             orientation = LinearLayout.VERTICAL
         }
 
@@ -584,7 +571,7 @@ class CreateFragment : Fragment() {
             layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+            ).apply { setMargins(18,16,18,0) }
             hint = "Step $currentStepNumber" // Hint with current step number
             textSize = 16f
             setPadding(12, 12, 12, 12)

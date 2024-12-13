@@ -15,9 +15,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="10dp">
 
         <!-- Recipe Image -->
+        <!--adjustViewBounds - Image will not be distorted when it's scaled-->
         <ImageView
             android:id="@+id/recipeImage"
             android:layout_width="150dp"
@@ -30,23 +31,29 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Recipe Name -->
+        <!-- maxLines - Limits to 2 lines -->
+        <!-- ellipsize - Doesn't truncate-->
         <TextView
             android:id="@+id/recipeName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="White Sauce Pasta"
+            android:text="Recipe Name"
             android:fontFamily="@font/alegreya_medium"
             android:textColor="@color/dark_gray"
             android:textSize="24sp"
+            android:ellipsize="none"
+            android:maxLines="2"
+            android:scrollHorizontally="false"
+            android:singleLine="false"
             app:layout_constraintStart_toEndOf="@+id/recipeImage"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Recipe Cook Time -->
+        <!-- Recipe Cook Time
+             drawableStart - Sets the given icon to the start of the text
+             drawablePadding - Sets the space between icon & text -->
+
         <TextView
             android:id="@+id/recipeCookTime"
             android:layout_width="wrap_content"
@@ -72,7 +79,7 @@
             android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipeName"
-            app:layout_constraintLeft_toRightOf="@+id/recipeCookTime" />
+            app:layout_constraintLeft_toRightOf="@+id/recipeCookTime"/>
 
         <ImageButton
             android:id="@+id/editRecipeButton"
@@ -81,8 +88,11 @@
             android:src="@drawable/edit_icon"
             android:background="@android:color/transparent"
             app:layout_constraintTop_toBottomOf="@+id/recipeCookTime"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
+
+
+

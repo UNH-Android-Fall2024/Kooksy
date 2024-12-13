@@ -28,7 +28,7 @@
                 app:boxBackgroundMode="outline"
                 app:boxStrokeWidth="1dp"
                 app:hintEnabled="true"
-                android:layout_marginTop="16dp">
+                android:layout_marginHorizontal="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtRecipeName"
@@ -36,7 +36,9 @@
                     android:layout_height="wrap_content"
                     android:padding="12dp"
                     android:textSize="16sp"
-                    android:background="@drawable/rounded_edittext" />
+                    android:background="@drawable/rounded_edittext"
+
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Add Image Button -->
@@ -60,8 +62,6 @@
                 android:layout_below="@id/camera_preview"
                 android:visibility="gone" /> <!-- Initially hidden -->
 
-
-
             <!-- Calories with Floating Label -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -70,7 +70,9 @@
                 app:boxBackgroundMode="outline"
                 app:boxStrokeWidth="1dp"
                 app:hintEnabled="true"
-                android:layout_marginTop="16dp">
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="16dp"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/calories_input"
@@ -79,7 +81,8 @@
                     android:padding="12dp"
                     android:textSize="16sp"
                     android:inputType="number"
-                    android:background="@drawable/rounded_edittext"/>
+                    android:background="@drawable/rounded_edittext"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Cook Time and Difficulty Level -->
@@ -87,7 +90,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="16dp">
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="15dp"
+                >
 
                 <!-- Cook Time with Floating Label -->
                 <com.google.android.material.textfield.TextInputLayout
@@ -126,7 +131,7 @@
                 android:hint="Ingredient 1"
                 app:boxBackgroundMode="outline"
                 app:boxStrokeWidth="1dp"
-                android:layout_marginTop="16dp">
+                android:layout_margin="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ingredient_1"
@@ -142,7 +147,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Quantity 1"
                 app:boxBackgroundMode="outline"
-                app:boxStrokeWidth="1dp">
+                app:boxStrokeWidth="1dp"
+                android:layout_marginHorizontal="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/quantity_1"
@@ -159,7 +165,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="16dp">
+                android:layout_margin="16dp">
             </LinearLayout>
 
             <!-- Add Ingredient Button -->
@@ -185,7 +191,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Step 1"
                     app:boxBackgroundMode="outline"
-                    app:boxStrokeWidth="1dp">
+                    app:boxStrokeWidth="1dp"
+                    android:layout_marginHorizontal="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/step1_input"
@@ -195,7 +202,8 @@
                         android:textSize="16sp"
                         android:inputType="textMultiLine"
                         android:minLines="3"
-                        android:background="@drawable/rounded_edittext"/>
+                        android:background="@drawable/rounded_edittext"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>

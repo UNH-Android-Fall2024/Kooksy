@@ -18,7 +18,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
-        tools:listitem="@layout/item_favourite" />
+        tools:listitem="@layout/item_favourite"
+        android:layout_margin="18dp"/>
 
     <!-- Empty state message when no favorites are available -->
     <TextView

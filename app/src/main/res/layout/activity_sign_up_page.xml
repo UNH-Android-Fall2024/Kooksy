@@ -45,7 +45,8 @@
         app:layout_constraintTop_toBottomOf="@+id/signupimage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:layout_margin = "18dp"/>
 
     <EditText
         android:id="@+id/signupemail"
@@ -58,7 +59,8 @@
         app:layout_constraintTop_toBottomOf="@+id/signupusername"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:layout_margin = "18dp" />
 
     <EditText
         android:id="@+id/signuppassword"
@@ -72,7 +74,8 @@
         app:layout_constraintTop_toBottomOf="@+id/signupemail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:layout_margin = "18dp"/>
 
     <EditText
         android:id="@+id/signupconfirmpassword"
@@ -86,7 +89,8 @@
         app:layout_constraintTop_toBottomOf="@+id/signuppassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:layout_margin = "18dp"/>
 
     <Button
         android:id="@+id/signinbutton"
@@ -98,7 +102,8 @@
         app:layout_constraintTop_toBottomOf="@+id/signupconfirmpassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:layout_margin = "18dp"/>
 
     <TextView
         android:id="@+id/textView12"

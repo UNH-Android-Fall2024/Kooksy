@@ -247,10 +247,10 @@ class FragmentRecipeDetails : Fragment() {
 
         dialogView.findViewById<Button>(R.id.submitRating).setOnClickListener {
             if (ratingValue > 0) {
-               // Checks if the current user is not in the list of users who have already rated the recipe (ratedBy).
+                // Checks if the current user is not in the list of users who have already rated the recipe (ratedBy).
                 val isCurrentUserNotRated = ratedBy.contains(userId).not()
                 if (isCurrentUserNotRated){
-                   // recipeItem.is_rated = isCurrentUserNotRated
+                    // recipeItem.is_rated = isCurrentUserNotRated
                     viewmodel.submitRating(isCurrentUserNotRated, ratingValue, recipeItem)
                 }else {
                     Toast.makeText(requireActivity(), "You have already rated this recipe", Toast.LENGTH_SHORT).show()
